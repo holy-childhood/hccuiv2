@@ -16,16 +16,19 @@ import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Toolbar from '@mui/material/Toolbar'
 
-import { useMenuStore } from '../DataProvider.ts'
+import {useAuthStore, useMenuStore, useUiStore} from '../DataProvider.ts'
 import { Menu } from '../models/Menu.ts'
 
 import { NavButton } from './nav/NavButton.tsx'
 import { NavMenu } from './nav/NavMenu.tsx'
 import {ExpandMore} from '@mui/icons-material'
 import {Button, Typography} from '@mui/material'
+import AddMenu from './nav/actions/AddMenu.tsx'
 
 export const Nav = observer(() => {
   const { loadMenu, menus } = useMenuStore()
+  const { isAdministrator } = useAuthStore()
+  const { isEdit } = useUiStore()
 
   React.useEffect(() => {
     loadMenu().finally()
@@ -35,14 +38,20 @@ export const Nav = observer(() => {
     <AppBar position="static">
       <Box display={{ xs: 'none', md: 'block' }} px={2}>
         <Toolbar disableGutters variant="dense">
-          <NavButton icon={<FontAwesomeIcon icon={faHome} />} to="/">
+          <NavButton icon={<FontAwesomeIcon icon={faHome} />} showExpandIcon={false} to="/">
             Home
           </NavButton>
+
           {menus.map((menu: Menu) => (
             <Box key={menu.id}>
               <NavMenu menu={menu} />
             </Box>
           ))}
+
+          {isAdministrator && isEdit &&
+            <AddMenu />
+          }
+
         </Toolbar>
       </Box>
       <Box display={{ md: 'none' }}>

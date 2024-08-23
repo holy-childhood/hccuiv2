@@ -16,4 +16,7 @@ export const useAppStore = () => {
   return context.appStore
 }
 
+export const useAuthStore = () => useAppStore().authStore
 export const useMenuStore = () => useAppStore().menuStore
+export const usePageStore = () => useAppStore().pageStore
+export const useUiStore = () => useAppStore().uiStore
