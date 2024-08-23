@@ -4,13 +4,13 @@ import { Link as RouterLink } from "react-router-dom"
 import { NavArgs } from './NavButton.tsx'
 import { MenuItem } from '@mui/material'
 
-
 interface NavMenuItemProps {
+  disabled?: boolean
   to?: string
   onClick?: () => void
 }
 
-export const NavMenuItem: React.FC<PropsWithChildren<NavMenuItemProps>> = ({ to, onClick, children }) => {
+export const NavMenuItem: React.FC<PropsWithChildren<NavMenuItemProps>> = ({ disabled = false, to, onClick, children }) => {
   const args = { onClick: onClick} as NavArgs
 
   if (to) {
@@ -22,6 +22,7 @@ export const NavMenuItem: React.FC<PropsWithChildren<NavMenuItemProps>> = ({ to,
     // @ts-expect-error MenuItem doesn't support component
     <MenuItem
       {...args}
+      disabled={disabled}
       sx={{
         fontFamily: 'inherit',
         fontSize: 16,

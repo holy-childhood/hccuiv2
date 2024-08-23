@@ -3,14 +3,23 @@ import {observer} from 'mobx-react-lite'
 import Box from '@mui/material/Box'
 import {Menu} from '../../models/Menu.ts'
 import {NavButton} from './NavButton.tsx'
-import {ClickAwayListener, Fade, Paper, Popper} from '@mui/material'
+import {ClickAwayListener, Divider, Fade, Paper, Popper} from '@mui/material'
 import {NavMenuItem} from './NavMenuItem.tsx'
+import {useAuthStore, useUiStore} from '../../DataProvider.ts'
+import Stack from '@mui/material/Stack'
+import DeleteMenu from './actions/DeleteMenu.tsx'
+import EditMenu from './actions/EditMenu.tsx'
+import AddPage from './actions/AddPage.tsx'
+import {grey} from '@mui/material/colors'
 
 interface NavMenuProps {
   menu: Menu
 }
 
 export const NavMenu: React.FC<NavMenuProps> = observer(({ menu }) => {
+
+  const { isAdministrator } = useAuthStore()
+  const { isEdit } = useUiStore()
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
   const [open, setOpen] = React.useState(false)
@@ -34,6 +43,16 @@ export const NavMenu: React.FC<NavMenuProps> = observer(({ menu }) => {
                   {page.title}
                 </NavMenuItem>
               ))}
+
+              {isAdministrator && isEdit &&
+                <Stack>
+                  <Divider sx={{ bgcolor: grey[500], m: 1 }} />
+
+                  <AddPage menu={menu} onClose={() => setOpen(false)} />
+                  <EditMenu menu={menu} />
+                  <DeleteMenu menu={menu} />
+                </Stack>
+              }
             </Paper>
           </Fade>
         </Popper>

@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import {amber, blue, green, red} from '@mui/material/colors'
 
 export const HCCTheme = createTheme({
   palette: {
@@ -16,6 +17,30 @@ export const HCCTheme = createTheme({
       light: '#ffdf33',
       main: '#ffd700',
       dark: '#b29600'
+    },
+    info: {
+      light: blue[500],
+      main: blue[600],
+      dark: blue[700],
+      contrastText: '#fff'
+    },
+    error: {
+      light: red[500],
+      main: red[600],
+      dark: red[700]
+    },
+    success: {
+      light: green[500],
+      main: green[600],
+      dark: green[700]
+    },
+    warning: {
+      light: amber[500],
+      main: amber[600],
+      dark: amber[700]
+    },
+    action: {
+      hoverOpacity: 0.2
     }
   },
   typography: {
@@ -32,6 +57,9 @@ export const HCCTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          borderRadius: 14,
+          height: 28,
+          padding: 14,
           textTransform: 'none'
         }
       }
